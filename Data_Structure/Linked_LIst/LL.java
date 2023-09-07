@@ -281,11 +281,6 @@ class LinkedList {
         this.size = 0;
     }
 
-    LinkedList(String Head) {
-        this.head = new Node(Head);
-        this.size = 1;
-    }
-
     LinkedList(String Head, String... Data) {
         this.head = new Node(Head);
         this.size = Data.length + 1;
