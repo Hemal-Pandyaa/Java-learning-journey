@@ -67,11 +67,15 @@ public class St_ascending {
     public static void main(String args[]){
         stack st = new stack();
         st.push(5);
-        st.push(4);
-        st.push(3);
-        st.push(2);
+        st.push(20);
+        st.push(56);
         st.push(1);
-        st.push(6);
+        st.push(10);
+        st.push(0);
+        st.push(78);
+        st.push(56);
+        st.push(99);
+        
 
         while(!st.isEmpty()){
             System.out.println(st.pop());
