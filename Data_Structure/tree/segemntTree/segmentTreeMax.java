@@ -65,6 +65,29 @@ class SegmentTree {
         }
     }
 
+
+    public void update(int idx, int value){
+        update(this.root,idx,value);
+        return;
+    }
+
+    private void update(Node currNode, int idx, int value) {
+        if (currNode.li == currNode.ri) {
+            currNode.data = value;
+            return;
+        } else {
+            int mid = (currNode.li + currNode.ri) / 2;
+            if (idx > mid) {
+                update(currNode.right, idx, value);
+            } else {
+                update(currNode.left, idx, value);
+            }
+        }
+        // Would never be nulll as it is property of segemtent tree that if will be
+        // equal before null and first condition will break there
+        currNode.data = Math.max(currNode.left.data,currNode.right.data);
+    }
+
     SegmentTree(int data[]) {
         this.root = this.constructTree(data, 0, data.length - 1);
     }
@@ -75,7 +98,14 @@ public class segmentTreeMax {
     public static void main(String args[]) {
         int arr[] = { 1, 2, 4, 7, 8, 2, 0, 6, 1, 7 };
         SegmentTree tree = new SegmentTree(arr);
-        System.out.println(tree.Query(3,7));
+        System.out.print("Query 1 :");
+        System.out.println(tree.Query(0, 9));
+        System.out.println("Updated Value");
+        tree.update(6,23);
+        System.out.println("Updated Value");
+        tree.update(3, 16);
+        System.out.print("Query 2: ");
+        System.out.println(tree.Query(3, 6));
 
-    }   
+    }
 }

@@ -2,17 +2,18 @@
 // None of the node have any date they only have left and right indexes and their division to the next left and right
 // constructing tree will replace all the old elements
 
-class SegmentTree{
+class SegmentTree {
     Node root;
     private int arr[];
-    class Node{
+
+    class Node {
         int data;
         int li;
         int ri;
         Node left;
         Node right;
 
-        Node(int data,int li,int ri){
+        Node(int data, int li, int ri) {
             this.data = data;
             this.li = li;
             this.ri = ri;
@@ -21,63 +22,82 @@ class SegmentTree{
         }
     }
 
-
-    private void constructArr(int data[]){
+    private void constructArr(int data[]) {
         this.arr = new int[data.length];
         // changes will be reflected on main array
         this.arr = data.clone();
     }
-    private Node constructTree(int data[],int start,int end){
-        if(this.root == null){
+
+    private Node constructTree(int data[], int start, int end) {
+        if (this.root == null) {
             constructArr(data);
         }
-        if(start == end){
-            Node leafNode = new Node(arr[start],start,start);
+        if (start == end) {
+            Node leafNode = new Node(arr[start], start, start);
             return leafNode;
         }
-        int mid = (start+end)/2;
+        int mid = (start + end) / 2;
         Node left = constructTree(data, start, mid);
-        Node right = constructTree(data,mid+1,end);
-        int maxData =left.data + right.data;
-        Node currNode = new Node(maxData,left.li,right.ri);
+        Node right = constructTree(data, mid + 1, end);
+        int maxData = left.data + right.data;
+        Node currNode = new Node(maxData, left.li, right.ri);
         currNode.left = left;
         currNode.right = right;
         return currNode;
-        
 
     }
 
-
-    // For quering we will check the li and ri of left and then li and ri of the right if li is small that left index and ri
-    public int Query(int start,int end){
-        return this.Query(this.root,start,end);
+    // For quering we will check the li and ri of left and then li and ri of the
+    // right if li is small that left index and ri
+    public int Query(int start, int end) {
+        return this.Query(this.root, start, end);
     }
 
-    private int Query(Node currNode,int start,int end){
-        if(currNode.ri < start || currNode.li > end){
+    private int Query(Node currNode, int start, int end) {
+        if (currNode.ri < start || currNode.li > end) {
             return 0;
-        }else if(currNode.li >= start && currNode.ri <= end){
+        } else if (currNode.li >= start && currNode.ri <= end) {
             return currNode.data;
-        }else{
+        } else {
             int left = Query(currNode.left, start, end);
-            int right =  Query(currNode.right, start, end);
-            return right+left;
+            int right = Query(currNode.right, start, end);
+            return right + left;
         }
     }
 
+    public void update(int idx, int value) {
+        update(this.root, idx, value);
+    }
 
+    private void update(Node currNode, int idx, int value) {
+        if (currNode.li == currNode.ri) {
+            currNode.data = value;
+            return; // I hate return statment
+        } else {
+            int mid = (currNode.ri + currNode.li) / 2;
+            if (idx > mid) {
+                update(currNode.right, idx, value);
+            } else {
+                update(currNode.left, idx, value);
+            }
+        }
+        // Would never be null because of properties of segement tree
+        currNode.data = currNode.left.data + currNode.right.data;
+    }
 
-    SegmentTree(int data[]){
-        this.root = this.constructTree(data,0,data.length - 1);
+    SegmentTree(int data[]) {
+        this.root = this.constructTree(data, 0, data.length - 1);
     }
 }
 
 public class segmentTreeSum {
 
-
-    public static void main(String args[]){
-        int arr[] = {1,2,4,7,8,2,3,6,1,7};
+    public static void main(String args[]) {
+        int arr[] = { 1, 2, 4, 7, 8, 2, 3, 6, 1, 7 };
         SegmentTree tree = new SegmentTree(arr);
-        System.out.println(tree.Query(3,8));
+        System.out.println(tree.Query(0, 9));
+        tree.update(4, 6);
+        System.out.println(tree.Query(0, arr.length));
+
     }
 }
