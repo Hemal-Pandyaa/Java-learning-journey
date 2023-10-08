@@ -6,14 +6,14 @@ class LinkedList {
     int size;
 
     // Node class
-    class Node {
+    static class Node {
 
         // Data of Node
         String data;
         Node next;
         public int count;
 
-        // Constructer
+        // Constructor
         Node(String Data) {
             this.data = Data;
             this.next = null;
@@ -63,7 +63,7 @@ class LinkedList {
             currNode = currNode.next;
         }
 
-        // Printing the last remaning linked list as above condition will fail to print
+        // Printing the last remaining linked list as above condition will fail to print
         // the last element in linked list
         System.out.println(currNode.data);
 
@@ -110,8 +110,8 @@ class LinkedList {
         while (currNode.next != null) {
             currNode = currNode.next;
         }
-        for (int i = 0; i < Data.length; i++) {
-            this.addNode(Data[i]);
+        for (String datum : Data) {
+            this.addNode(datum);
         }
     }
 
@@ -142,7 +142,7 @@ class LinkedList {
         Node currNode = head;
         int idx = 0;
         while (currNode.next != null) {
-            if (currNode.data == Data) {
+            if (currNode.data.equals(Data)) {
                 return idx;
             }
             currNode = currNode.next;
@@ -166,7 +166,7 @@ class LinkedList {
         }
     }
 
-    public void reverseWithiteration() {
+    public void reverseWithIteration() {
         if (this.head == null || this.head.next == null) {
             return;
         }
@@ -257,7 +257,7 @@ class LinkedList {
             currNode = head.next;
         }
         
-        while(count <= left && currNode != null){
+        while(count < left  && currNode != null){
             Node nextNode = currNode.next;
             currNode.next = prevNode;
 
@@ -320,7 +320,7 @@ public class LL {
         names.clear();
         names.addAll("1","2","3","4","5","6","7","8");
         names.printList();
-        names.reverseWithiteration();
+        names.reverseWithIteration();
         names.printList();
         names.reverseWithRecursion(names.head.next,names.head);
         names.printList();
@@ -328,7 +328,7 @@ public class LL {
         names.printList();
         names.removeNthFromLast(2);
         names.printList();
-        names.reversePart(5,7);
+        names.reversePart(2,5);
         names.printList();
 
     }
